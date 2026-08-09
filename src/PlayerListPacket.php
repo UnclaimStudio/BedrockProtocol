@@ -43,7 +43,7 @@ class PlayerListPacket extends DataPacket implements ClientboundPacket{
 	 * @generate-create-func
 	 * @param PlayerListEntry[]|UuidInterface[] $entries
 	 */
-	private static function create(array $entries) : self{
+	public static function create(array $entries) : self{
 		$result = new self;
 		$result->entries = $entries;
 		return $result;
@@ -78,6 +78,7 @@ class PlayerListPacket extends DataPacket implements ClientboundPacket{
 			if($innerType !== $expectedInnerType){
 				throw new PacketDecodeException("Unexpected inner type $innerType for player list entry type $type, expected $expectedInnerType");
 			}
+
 			if($type === self::TYPE_REMOVE){
 				$this->entries[] = CommonTypes::getUUID($in);
 			}elseif($type === self::TYPE_ADD){
@@ -104,10 +105,13 @@ class PlayerListPacket extends DataPacket implements ClientboundPacket{
 	protected function encodePayload(ByteBufferWriter $out) : void{
 		VarInt::writeUnsignedInt($out, count($this->entries));
 		foreach($this->entries as $entry){
-			$type = $entry instanceof UuidInterface ? self::TYPE_REMOVE : self::TYPE_ADD;
+			$isRemoveEntry = $entry instanceof UuidInterface;
+			$type = $isRemoveEntry ? self::TYPE_REMOVE : self::TYPE_ADD;
+
 			VarInt::writeUnsignedInt($out, $type);
 			Byte::writeUnsigned($out, self::INNER_TYPES[$type]);
-			if($entry instanceof UuidInterface){
+
+			if($isRemoveEntry){
 				CommonTypes::putUUID($out, $entry);
 			}else{
 				CommonTypes::putUUID($out, $entry->uuid);

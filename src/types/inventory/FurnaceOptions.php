@@ -9,11 +9,6 @@ use pmmp\encoding\VarInt;
 use pocketmine\network\mcpe\protocol\serializer\CommonTypes;
 
 final class FurnaceOptions{
-	/**
-	 * @var FurnaceLeftTabIndex $leftTab
-	 * @var bool $filtering
-	 * @var FurnaceLayout $layout
-	 */
 	public function __construct(
 		private FurnaceLeftTabIndex $leftTab,
 		private bool $filtering,
@@ -29,12 +24,12 @@ final class FurnaceOptions{
 
 	public static function decode(ByteBufferReader $in) : self{
 		$leftTabRaw = VarInt::readUnsignedInt($in);
-		$leftTab = FurnaceLeftTabIndex::tryFrom($leftTabRaw);
+		$leftTab = FurnaceLeftTabIndex::tryFrom($leftTabRaw) ?? throw new PacketDecodeException("Unknown furnace left tab index $leftTabRaw");
 
 		$filtering = CommonTypes::getBool($in);
 
 		$layoutRaw = VarInt::readUnsignedInt($in);
-		$layout = FurnaceLayout::tryFrom($layoutRaw);
+		$layout = FurnaceLayout::tryFrom($layoutRaw) ?? throw new PacketDecodeException("Unknown furnace layout $layoutRaw");
 
 		return new self($leftTab, $filtering, $layout);
 	}

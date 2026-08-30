@@ -25,7 +25,7 @@ class SetPlayerFurnaceOptionsPacket extends DataPacket implements ServerboundPac
 		$this->options = FurnaceOptions::decode($in);
 	}
 
-	public function encodePayload($out) : void {
+	public function encodePayload(ByteBufferWriter $out) : void {
 		Byte::writeUnsigned($out, $this->furnaceType);
 		$this->options->encode($out);
 	}

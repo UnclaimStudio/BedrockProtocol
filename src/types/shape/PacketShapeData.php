@@ -113,7 +113,7 @@ final class PacketShapeData{
 		);
 	}
 
-	public static function text(int $networkId, Vector3 $location, string $text, bool $useRotation = false, ?Color $backgroundColor = null, float $lineGapHeight,bool $depthTest = true, bool $showBackface = true, bool $showTextBackface = true, ?Color $color = null, ?int $dimensionId = null, ?int $attachedToEntityId = null) : self{
+	public static function text(int $networkId, Vector3 $location, string $text, float $lineGapHeight, bool $useRotation = false, ?Color $backgroundColor = null, bool $depthTest = true, bool $showBackface = true, bool $showTextBackface = true, ?Color $color = null, ?int $dimensionId = null, ?int $attachedToEntityId = null) : self{
 		return new self(
 			networkId: $networkId,
 			type: PrimitiveShapeType::TEXT,

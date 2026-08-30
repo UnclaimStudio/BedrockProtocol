@@ -98,16 +98,10 @@ final class CameraPreset{
 
 	public function getControlScheme() : ControlScheme{ return $this->controlScheme; }
 
-	/**
-	 * @return bool
-	 */
 	public function isApplyInheritedStartingRotation() : bool{
 		return $this->applyInheritedStartingRotation;
 	}
 
-	/**
-	 * @return Vector2
-	 */
 	public function getStartingRotation() : Vector2{
 		return $this->startingRotation;
 	}

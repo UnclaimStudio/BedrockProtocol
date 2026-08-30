@@ -52,7 +52,7 @@ class MoveActorDeltaPacket extends DataPacket implements ClientboundPacket{
 		bool $teleport,
 		bool $forceMoveLocalEntity,
 		bool $forceCompletion,
-		int $ticks
+		int $ticks,
 	) : self{
 		$result = new self;
 		$result->actorRuntimeId = $actorRuntimeId;

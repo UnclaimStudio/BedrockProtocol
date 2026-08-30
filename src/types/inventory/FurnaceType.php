@@ -12,20 +12,11 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\types;
+namespace pocketmine\network\mcpe\protocol\types\inventory;
 
-final class DeviceOS{
-
-	public const GOOGLE = 0;
-	public const IOS = 1;
-	public const OSX = 2;
-	public const AMAZON = 3;
-	public const WIN32 = 4;
-	public const DEDICATED = 5;
-	public const SONY = 6;
-	public const NINTENDO = 7;
-	public const XBOX = 8;
-	public const LINUX = 9;
-	public const UNKNOWN = 10;
-
+enum FurnaceType : int{
+	case NONE = 0;
+	case FURNACE = 1;
+	case BLAST_FURNACE = 2;
+	case SMOKER = 3;
 }

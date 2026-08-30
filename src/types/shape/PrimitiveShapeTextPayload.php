@@ -16,6 +16,7 @@ namespace pocketmine\network\mcpe\protocol\types\shape;
 
 use pmmp\encoding\ByteBufferReader;
 use pmmp\encoding\ByteBufferWriter;
+use pmmp\encoding\LE;
 use pocketmine\color\Color;
 use pocketmine\network\mcpe\protocol\serializer\CommonTypes;
 use pocketmine\network\mcpe\protocol\types\GetTypeIdFromConstTrait;
@@ -29,6 +30,7 @@ final class PrimitiveShapeTextPayload extends PrimitiveShapePayload{
 		private string $text,
 		private bool $useRotation,
 		private ?Color $backgroundColor,
+		private float $lineGapHeight,
 		private bool $depthTest,
 		private bool $showBackface,
 		private bool $showTextBackface,
@@ -50,17 +52,19 @@ final class PrimitiveShapeTextPayload extends PrimitiveShapePayload{
 		$text = CommonTypes::getString($in);
 		$useRotation = CommonTypes::getBool($in);
 		$backgroundColor = CommonTypes::readOptional($in, CommonTypes::readColor(...));
+		$lineGapHeight = LE::readFloat($in);
 		$depthTest = CommonTypes::getBool($in);
 		$showBackface = CommonTypes::getBool($in);
 		$showTextBackface = CommonTypes::getBool($in);
 
-		return new self($text, $useRotation, $backgroundColor, $depthTest, $showBackface, $showTextBackface);
+		return new self($text, $useRotation, $backgroundColor,$lineGapHeight, $depthTest, $showBackface, $showTextBackface);
 	}
 
 	public function write(ByteBufferWriter $out) : void{
 		CommonTypes::putString($out, $this->text);
 		CommonTypes::putBool($out, $this->useRotation);
 		CommonTypes::writeOptional($out, $this->backgroundColor, CommonTypes::writeColor(...));
+		LE::writeFloat($out, $this->lineGapHeight);
 		CommonTypes::putBool($out, $this->depthTest);
 		CommonTypes::putBool($out, $this->showBackface);
 		CommonTypes::putBool($out, $this->showTextBackface);

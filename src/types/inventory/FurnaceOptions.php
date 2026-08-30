@@ -28,17 +28,21 @@ final class FurnaceOptions{
 
 
 	public static function decode(ByteBufferReader $in) : self{
-		$leftTab = VarInt::readUnsignedInt($in);
+		$leftTabRaw = VarInt::readUnsignedInt($in);
+		$leftTab = FurnaceLeftTabIndex::tryFrom($leftTabRaw);
+
 		$filtering = CommonTypes::getBool($in);
-		$layout = VarInt::readUnsignedInt($in);
+
+		$layoutRaw = VarInt::readUnsignedInt($in);
+		$layout = FurnaceLayout::tryFrom($layoutRaw);
 
 		return new self($leftTab, $filtering, $layout);
 	}
 
 	public function encode(ByteBufferWriter $out) : void{
-		VarInt::writeUnsignedInt($out, $this->leftTab);
+		VarInt::writeUnsignedInt($out, $this->leftTab->value);
 		CommonTypes::putBool($out, $this->filtering);
-		VarInt::writeUnsignedInt($out, $this->layout);
+		VarInt::writeUnsignedInt($out, $this->layout->value);
 	}
 
 }

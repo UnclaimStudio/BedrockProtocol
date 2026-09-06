@@ -19,7 +19,6 @@ use pocketmine\network\mcpe\protocol\types\PacketIntEnumTrait;
 enum LoadingScreenType : int{
 	use PacketIntEnumTrait;
 
-	case UNKNOWN = 0;
-	case START_LOADING_SCREEN = 1;
-	case STOP_LOADING_SCREEN = 2;
+	case START_LOADING_SCREEN = 0;
+	case STOP_LOADING_SCREEN = 1;
 }

@@ -23,6 +23,7 @@ use pocketmine\network\mcpe\protocol\serializer\CommonTypes;
 use pocketmine\network\mcpe\protocol\types\BlockPosition;
 use pocketmine\network\mcpe\protocol\types\DimensionIds;
 use pocketmine\network\mcpe\protocol\types\MapDecoration;
+use pocketmine\network\mcpe\protocol\types\MapDecorationType;
 use pocketmine\network\mcpe\protocol\types\MapImage;
 use pocketmine\network\mcpe\protocol\types\MapTrackedObject;
 
@@ -80,7 +81,8 @@ class ClientboundMapItemDataPacket extends DataPacket implements ClientboundPack
 		}));
 
 		$this->decorations = CommonTypes::readOptional($in, static fn($in) => CommonTypes::readList($in, static function($in){
-			$icon = Byte::readUnsigned($in);
+			$iconId = Byte::readUnsigned($in);
+			$icon = MapDecorationType::tryFrom($iconId) ?? throw new PacketDecodeException("Unknown map decoration type $iconId");
 			$rotation = Byte::readUnsigned($in);
 			$xOffset = Byte::readUnsigned($in);
 			$yOffset = Byte::readUnsigned($in);
@@ -134,7 +136,7 @@ class ClientboundMapItemDataPacket extends DataPacket implements ClientboundPack
 		}));
 
 		CommonTypes::writeOptional($out, $this->decorations, static fn($out, $v) => CommonTypes::writeList($out, $v, static function($out, $decoration) : void{
-			Byte::writeUnsigned($out, $decoration->getIcon());
+			Byte::writeUnsigned($out, $decoration->getIcon()->value);
 			Byte::writeUnsigned($out, $decoration->getRotation());
 			Byte::writeUnsigned($out, $decoration->getXOffset());
 			Byte::writeUnsigned($out, $decoration->getYOffset());

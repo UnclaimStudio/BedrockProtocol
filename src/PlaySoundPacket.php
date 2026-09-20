@@ -31,6 +31,7 @@ class PlaySoundPacket extends DataPacket implements ClientboundPacket{
 	public float $volume;
 	public float $pitch;
 	public int $loopCount = 0;
+	public bool $bypassListenerRangeCheck;
 	public ?int $serverSoundHandle = null;
 
 	/**
@@ -44,6 +45,7 @@ class PlaySoundPacket extends DataPacket implements ClientboundPacket{
 		float $volume,
 		float $pitch,
 		int $loopCount,
+		bool $bypassListenerRangeCheck,
 		?int $serverSoundHandle,
 	) : self{
 		$result = new self;
@@ -54,6 +56,7 @@ class PlaySoundPacket extends DataPacket implements ClientboundPacket{
 		$result->volume = $volume;
 		$result->pitch = $pitch;
 		$result->loopCount = $loopCount;
+		$result->bypassListenerRangeCheck = $bypassListenerRangeCheck;
 		$result->serverSoundHandle = $serverSoundHandle;
 		return $result;
 	}
@@ -67,6 +70,7 @@ class PlaySoundPacket extends DataPacket implements ClientboundPacket{
 		$this->volume = LE::readFloat($in);
 		$this->pitch = LE::readFloat($in);
 		$this->loopCount = VarInt::readSignedInt($in);
+		$this->bypassListenerRangeCheck = CommonTypes::getBool($in);
 		$this->serverSoundHandle = CommonTypes::readOptional($in, LE::readUnsignedLong(...));
 	}
 
@@ -76,6 +80,7 @@ class PlaySoundPacket extends DataPacket implements ClientboundPacket{
 		LE::writeFloat($out, $this->volume);
 		LE::writeFloat($out, $this->pitch);
 		VarInt::writeSignedInt($out, $this->loopCount);
+		CommonTypes::putBool($out, $this->bypassListenerRangeCheck);
 		CommonTypes::writeOptional($out, $this->serverSoundHandle, LE::writeUnsignedLong(...));
 	}
 

@@ -14,14 +14,13 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\types;
 
-class ScorePacketEntry{
-	public int $scoreboardId;
-	/** @var string (optional for remove action) */
-	public ?string $objectiveName;
-	public int $score;
-	public ScorePacketEntryAction $action;
-	/** @var int|null (if action entity or player) */
-	public ?int $actorUniqueId;
-	/** @var string|null (if action fake player) */
-	public ?string $customName;
+/**
+ *  @see NoiseAlignment
+ */
+final class NoiseAlignementType{
+	public const  MIN_LOCAL_TRANSITION_END = 0;
+
+	private function __construct(){
+		//NOOP
+	}
 }

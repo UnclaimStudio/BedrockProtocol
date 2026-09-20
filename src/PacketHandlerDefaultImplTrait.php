@@ -941,4 +941,8 @@ trait PacketHandlerDefaultImplTrait{
 	public function handleSetPlayerFurnaceOptions(SetPlayerFurnaceOptionsPacket $packet) : bool{
 		return false;
 	}
+
+	public function handleRecordStartedPacket(RecordStartedPacket $packet) : bool{
+		return false;
+	}
 }

@@ -12,13 +12,15 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\types\hud;
+namespace pocketmine\network\mcpe\protocol\types;
 
-use pocketmine\network\mcpe\protocol\types\PacketIntEnumTrait;
+/**
+ *  @see NoiseAlignment
+ */
+final class NoiseAlignementType{
+	public const  MIN_LOCAL_TRANSITION_END = 0;
 
-enum LoadingScreenType : int{
-	use PacketIntEnumTrait;
-
-	case START_LOADING_SCREEN = 0;
-	case STOP_LOADING_SCREEN = 1;
+	private function __construct(){
+		//NOOP
+	}
 }

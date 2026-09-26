@@ -88,13 +88,13 @@ class SetScorePacket extends DataPacket implements ClientboundPacket{
 			VarInt::writeSignedLong($out, $entry->scoreboardId);
 
 			if($entry->action === ScorePacketEntryAction::REMOVE){
-				CommonTypes::putString($out, $entry->objectiveName);
+				CommonTypes::putString($out, $entry->objectiveName ?? throw new \InvalidArgumentException("ObjectiveName must be set for this entry type"));
 			}elseif($entry->action === ScorePacketEntryAction::CHANGE_PLAYER || $entry->action === ScorePacketEntryAction::CHANGE_ENTITY){
-				CommonTypes::putString($out, $entry->objectiveName);
+				CommonTypes::putString($out, $entry->objectiveName ?? throw new \InvalidArgumentException("ObjectiveName must be set for this entry type"));
 				LE::writeSignedInt($out, $entry->score);
 				CommonTypes::putActorUniqueId($out, $entry->actorUniqueId);
 			}elseif($entry->action === ScorePacketEntryAction::CHANGE_FAKE_PLAYER){
-				CommonTypes::putString($out, $entry->objectiveName);
+				CommonTypes::putString($out, $entry->objectiveName ?? throw new \InvalidArgumentException("ObjectiveName must be set for this entry type"));
 				LE::writeSignedInt($out, $entry->score);
 				CommonTypes::putString($out, $entry->customName ?? throw new \InvalidArgumentException("CustomName must be set for this entry type"));
 			}else{ // this should never be the case

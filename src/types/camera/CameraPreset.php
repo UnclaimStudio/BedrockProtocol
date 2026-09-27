@@ -30,95 +30,107 @@ final class CameraPreset{
 	public function __construct(
 		private string $name,
 		private string $parent,
-		private ?float $xPosition,
-		private ?float $yPosition,
-		private ?float $zPosition,
-		private ?float $pitch,
-		private ?float $yaw,
-		private ?float $rotationSpeed,
-		private ?bool $snapToTarget,
-		private ?Vector2 $horizontalRotationLimit,
-		private ?Vector2 $verticalRotationLimit,
-		private ?bool $continueTargeting,
-		private ?float $blockListeningRadius,
-		private ?Vector2 $viewOffset,
-		private ?Vector3 $entityOffset,
-		private ?float $radius,
-		private ?float $yawLimitMin,
-		private ?float $yawLimitMax,
-		private ?int $audioListenerType,
-		private ?bool $playerEffects,
-		private ?CameraPresetAimAssist $aimAssist,
-		private ?ControlScheme $controlScheme,
+		private float $xPosition,
+		private float $yPosition,
+		private float $zPosition,
+		private float $pitch,
+		private float $yaw,
+		private float $rotationSpeed,
+		private bool $snapToTarget,
+		private Vector2 $horizontalRotationLimit,
+		private Vector2 $verticalRotationLimit,
+		private bool $continueTargeting,
+		private float $blockListeningRadius,
+		private Vector2 $viewOffset,
+		private Vector3 $entityOffset,
+		private float $radius,
+		private float $yawLimitMin,
+		private float $yawLimitMax,
+		private int $audioListenerType,
+		private bool $playerEffects,
+		private CameraPresetAimAssist $aimAssist,
+		private ControlScheme $controlScheme,
+		private bool $applyInheritedStartingRotation,
+		private Vector2 $startingRotation,
 	){}
 
 	public function getName() : string{ return $this->name; }
 
 	public function getParent() : string{ return $this->parent; }
 
-	public function getXPosition() : ?float{ return $this->xPosition; }
+	public function getXPosition() : float{ return $this->xPosition; }
 
-	public function getYPosition() : ?float{ return $this->yPosition; }
+	public function getYPosition() : float{ return $this->yPosition; }
 
-	public function getZPosition() : ?float{ return $this->zPosition; }
+	public function getZPosition() : float{ return $this->zPosition; }
 
-	public function getPitch() : ?float{ return $this->pitch; }
+	public function getPitch() : float{ return $this->pitch; }
 
-	public function getYaw() : ?float{ return $this->yaw; }
+	public function getYaw() : float{ return $this->yaw; }
 
-	public function getRotationSpeed() : ?float { return $this->rotationSpeed; }
+	public function getRotationSpeed() : float { return $this->rotationSpeed; }
 
-	public function getSnapToTarget() : ?bool { return $this->snapToTarget; }
+	public function getSnapToTarget() : bool { return $this->snapToTarget; }
 
-	public function getHorizontalRotationLimit() : ?Vector2{ return $this->horizontalRotationLimit; }
+	public function getHorizontalRotationLimit() : Vector2{ return $this->horizontalRotationLimit; }
 
-	public function getVerticalRotationLimit() : ?Vector2{ return $this->verticalRotationLimit; }
+	public function getVerticalRotationLimit() : Vector2{ return $this->verticalRotationLimit; }
 
-	public function getContinueTargeting() : ?bool{ return $this->continueTargeting; }
+	public function getContinueTargeting() : bool{ return $this->continueTargeting; }
 
-	public function getBlockListeningRadius() : ?float{ return $this->blockListeningRadius; }
+	public function getBlockListeningRadius() : float{ return $this->blockListeningRadius; }
 
-	public function getViewOffset() : ?Vector2{ return $this->viewOffset; }
+	public function getViewOffset() : Vector2{ return $this->viewOffset; }
 
-	public function getEntityOffset() : ?Vector3{ return $this->entityOffset; }
+	public function getEntityOffset() : Vector3{ return $this->entityOffset; }
 
-	public function getRadius() : ?float{ return $this->radius; }
+	public function getRadius() : float{ return $this->radius; }
 
-	public function getYawLimitMin() : ?float{ return $this->yawLimitMin; }
+	public function getYawLimitMin() : float{ return $this->yawLimitMin; }
 
-	public function getYawLimitMax() : ?float{ return $this->yawLimitMax; }
+	public function getYawLimitMax() : float{ return $this->yawLimitMax; }
 
-	public function getAudioListenerType() : ?int{ return $this->audioListenerType; }
+	public function getAudioListenerType() : int{ return $this->audioListenerType; }
 
-	public function getPlayerEffects() : ?bool{ return $this->playerEffects; }
+	public function getPlayerEffects() : bool{ return $this->playerEffects; }
 
-	public function getAimAssist() : ?CameraPresetAimAssist{ return $this->aimAssist; }
+	public function getAimAssist() : CameraPresetAimAssist{ return $this->aimAssist; }
 
-	public function getControlScheme() : ?ControlScheme{ return $this->controlScheme; }
+	public function getControlScheme() : ControlScheme{ return $this->controlScheme; }
+
+	public function isApplyInheritedStartingRotation() : bool{
+		return $this->applyInheritedStartingRotation;
+	}
+
+	public function getStartingRotation() : Vector2{
+		return $this->startingRotation;
+	}
 
 	public static function read(ByteBufferReader $in) : self{
 		$name = CommonTypes::getString($in);
 		$parent = CommonTypes::getString($in);
-		$xPosition = CommonTypes::readOptional($in, LE::readFloat(...));
-		$yPosition = CommonTypes::readOptional($in, LE::readFloat(...));
-		$zPosition = CommonTypes::readOptional($in, LE::readFloat(...));
-		$pitch = CommonTypes::readOptional($in, LE::readFloat(...));
-		$yaw = CommonTypes::readOptional($in, LE::readFloat(...));
-		$rotationSpeed = CommonTypes::readOptional($in, LE::readFloat(...));
-		$snapToTarget = CommonTypes::readOptional($in, CommonTypes::getBool(...));
-		$horizontalRotationLimit = CommonTypes::readOptional($in, CommonTypes::getVector2(...));
-		$verticalRotationLimit = CommonTypes::readOptional($in, CommonTypes::getVector2(...));
-		$continueTargeting = CommonTypes::readOptional($in, CommonTypes::getBool(...));
-		$blockListeningRadius = CommonTypes::readOptional($in, LE::readFloat(...));
-		$viewOffset = CommonTypes::readOptional($in, CommonTypes::getVector2(...));
-		$entityOffset = CommonTypes::readOptional($in, CommonTypes::getVector3(...));
-		$radius = CommonTypes::readOptional($in, LE::readFloat(...));
-		$yawLimitMin = CommonTypes::readOptional($in, LE::readFloat(...));
-		$yawLimitMax = CommonTypes::readOptional($in, LE::readFloat(...));
-		$audioListenerType = CommonTypes::readOptional($in, Byte::readUnsigned(...));
-		$playerEffects = CommonTypes::readOptional($in, CommonTypes::getBool(...));
-		$aimAssist = CommonTypes::readOptional($in, fn() => CameraPresetAimAssist::read($in));
-		$controlScheme = CommonTypes::readOptional($in, fn() => ControlScheme::fromPacket(Byte::readUnsigned($in)));
+		$xPosition = LE::readFloat($in);
+		$yPosition = LE::readFloat($in);
+		$zPosition = LE::readFloat($in);
+		$pitch = LE::readFloat($in);
+		$yaw = LE::readFloat($in);
+		$rotationSpeed = LE::readFloat($in);
+		$snapToTarget = CommonTypes::getBool($in);
+		$horizontalRotationLimit = CommonTypes::getVector2($in);
+		$verticalRotationLimit = CommonTypes::getVector2($in);
+		$continueTargeting = CommonTypes::getBool($in);
+		$blockListeningRadius = LE::readFloat($in);
+		$viewOffset = CommonTypes::getVector2($in);
+		$entityOffset = CommonTypes::getVector3($in);
+		$radius = LE::readFloat($in);
+		$yawLimitMin = LE::readFloat($in);
+		$yawLimitMax = LE::readFloat($in);
+		$audioListenerType = Byte::readUnsigned($in);
+		$playerEffects = CommonTypes::getBool($in);
+		$aimAssist = CameraPresetAimAssist::read($in);
+		$controlScheme = ControlScheme::fromPacket(Byte::readUnsigned($in));
+		$applyInheritedStartingRotation = CommonTypes::getBool($in);
+		$startingRotation = CommonTypes::getVector2($in);
 
 		return new self(
 			$name,
@@ -142,32 +154,36 @@ final class CameraPreset{
 			$audioListenerType,
 			$playerEffects,
 			$aimAssist,
-			$controlScheme
+			$controlScheme,
+			$applyInheritedStartingRotation,
+			$startingRotation
 		);
 	}
 
 	public function write(ByteBufferWriter $out) : void{
 		CommonTypes::putString($out, $this->name);
 		CommonTypes::putString($out, $this->parent);
-		CommonTypes::writeOptional($out, $this->xPosition, LE::writeFloat(...));
-		CommonTypes::writeOptional($out, $this->yPosition, LE::writeFloat(...));
-		CommonTypes::writeOptional($out, $this->zPosition, LE::writeFloat(...));
-		CommonTypes::writeOptional($out, $this->pitch, LE::writeFloat(...));
-		CommonTypes::writeOptional($out, $this->yaw, LE::writeFloat(...));
-		CommonTypes::writeOptional($out, $this->rotationSpeed, LE::writeFloat(...));
-		CommonTypes::writeOptional($out, $this->snapToTarget, CommonTypes::putBool(...));
-		CommonTypes::writeOptional($out, $this->horizontalRotationLimit, CommonTypes::putVector2(...));
-		CommonTypes::writeOptional($out, $this->verticalRotationLimit, CommonTypes::putVector2(...));
-		CommonTypes::writeOptional($out, $this->continueTargeting, CommonTypes::putBool(...));
-		CommonTypes::writeOptional($out, $this->blockListeningRadius, LE::writeFloat(...));
-		CommonTypes::writeOptional($out, $this->viewOffset, CommonTypes::putVector2(...));
-		CommonTypes::writeOptional($out, $this->entityOffset, CommonTypes::putVector3(...));
-		CommonTypes::writeOptional($out, $this->radius, LE::writeFloat(...));
-		CommonTypes::writeOptional($out, $this->yawLimitMin, LE::writeFloat(...));
-		CommonTypes::writeOptional($out, $this->yawLimitMax, LE::writeFloat(...));
-		CommonTypes::writeOptional($out, $this->audioListenerType, Byte::writeUnsigned(...));
-		CommonTypes::writeOptional($out, $this->playerEffects, CommonTypes::putBool(...));
-		CommonTypes::writeOptional($out, $this->aimAssist, fn(ByteBufferWriter $out, CameraPresetAimAssist $v) => $v->write($out));
-		CommonTypes::writeOptional($out, $this->controlScheme, fn(ByteBufferWriter $out, ControlScheme $v) => Byte::writeUnsigned($out, $v->value));
+		LE::writeFloat($out, $this->xPosition);
+		LE::writeFloat($out, $this->yPosition);
+		LE::writeFloat($out, $this->zPosition);
+		LE::writeFloat($out, $this->pitch);
+		LE::writeFloat($out, $this->yaw);
+		LE::writeFloat($out, $this->rotationSpeed);
+		CommonTypes::putBool($out, $this->snapToTarget);
+		CommonTypes::putVector2($out, $this->horizontalRotationLimit);
+		CommonTypes::putVector2($out, $this->verticalRotationLimit);
+		CommonTypes::putBool($out, $this->continueTargeting);
+		LE::writeFloat($out, $this->blockListeningRadius);
+		CommonTypes::putVector2($out, $this->viewOffset);
+		CommonTypes::putVector3($out, $this->entityOffset);
+		LE::writeFloat($out, $this->radius);
+		LE::writeFloat($out, $this->yawLimitMin);
+		LE::writeFloat($out, $this->yawLimitMax);
+		Byte::writeUnsigned($out, $this->audioListenerType);
+		CommonTypes::putBool($out, $this->playerEffects);
+		$this->aimAssist->write($out);
+		Byte::writeUnsigned($out, $this->controlScheme->value);
+		CommonTypes::putBool($out, $this->applyInheritedStartingRotation);
+		CommonTypes::putVector2($out, $this->startingRotation);
 	}
 }

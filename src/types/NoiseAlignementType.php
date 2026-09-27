@@ -14,11 +14,13 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\protocol\types;
 
-enum PackSettingType : int{
-	use PacketIntEnumTrait;
+/**
+ *  @see NoiseAlignment
+ */
+final class NoiseAlignementType{
+	public const  MIN_LOCAL_TRANSITION_END = 0;
 
-	case FLOAT = 0;
-	case BOOL = 1;
-	case STRING = 2;
-	case STRING_ARRAY = 3;
+	private function __construct(){
+		//NOOP
+	}
 }

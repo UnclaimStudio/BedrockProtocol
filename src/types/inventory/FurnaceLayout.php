@@ -12,13 +12,10 @@
 
 declare(strict_types=1);
 
-namespace pocketmine\network\mcpe\protocol\types;
+namespace pocketmine\network\mcpe\protocol\types\inventory;
 
-enum PackSettingType : int{
-	use PacketIntEnumTrait;
-
-	case FLOAT = 0;
-	case BOOL = 1;
-	case STRING = 2;
-	case STRING_ARRAY = 3;
+enum FurnaceLayout : int{
+	case NONE = 0;
+	case INVENTORY_ONLY = 1;
+	case DEFAULT = 2;
 }

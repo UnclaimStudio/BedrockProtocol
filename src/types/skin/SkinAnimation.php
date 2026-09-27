@@ -16,9 +16,10 @@ namespace pocketmine\network\mcpe\protocol\types\skin;
 
 class SkinAnimation{
 
-	public const TYPE_HEAD = 0;
-	public const TYPE_BODY_32 = 1;
-	public const TYPE_BODY_128 = 2;
+	public const NONE = 0;
+	public const FACE = 1;
+	public const TYPE_BODY_32 = 2;
+	public const TYPE_BODY_128 = 3;
 
 	public const EXPRESSION_LINEAR = 0; //???
 	public const EXPRESSION_BLINKING = 1;

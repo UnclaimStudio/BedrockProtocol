@@ -21,9 +21,6 @@ use pmmp\encoding\LE;
 use pocketmine\network\mcpe\protocol\serializer\CommonTypes;
 use pocketmine\network\mcpe\protocol\types\BossBarColor;
 
-/**
- *
- */
 class BossEventPacket extends DataPacket implements ClientboundPacket, ServerboundPacket{
 	public const NETWORK_ID = ProtocolInfo::BOSS_EVENT_PACKET;
 
